@@ -2,6 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
+let PLAYERS = [
+  {
+    name: "Harvestor Of Sorrow",
+    score: 102
+  },
+  {
+    name: "Master Of Puppets",
+    score: 105
+  },
+  {
+    name: "Creeping Death",
+    score: 135
+  },
+]
 // header
 
 function Header(props){
@@ -61,9 +75,9 @@ function Application (props){
       <Header title={props.title}/>
 
       <div className="players">
-        <Player name="Harvestor Of Sorrow" score={32} />
-        <Player name="Creeping Death" score={42} />
-        <Player name="Master Of Puppets" score={22} />
+        {props.players.map(function(player){
+          return <Player name={player.name} score={player.score} />
+        })}
       </div>
 
 
@@ -73,7 +87,11 @@ function Application (props){
 };
 
 Application.propTypes = {
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  players: React.PropTypes.arrayOf(React.PropTypes.shape({
+    name: React.PropTypes.string.isRequired,
+    score: React.PropTypes.number.isRequired,
+  })).isRequired,
 }
 
 Application.defaultProps = {
@@ -82,4 +100,4 @@ Application.defaultProps = {
 
 
 const container =  document.getElementById('container');
-ReactDOM.render(<Application />, container );
+ReactDOM.render(<Application players={PLAYERS}/>, container );
